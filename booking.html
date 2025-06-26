@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Room - Hotel Azure Groove</title>
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+    <div class="booking-container">
+        <h1>Book Your Stay</h1>
+        <div class="room-selection">
+            <div class="room-item" data-room-type="standard" data-price="2500">
+                <img src="room1.jpg" alt="Standard Room">
+                <h3>Standard Room</h3>
+                <p>Comfortable and well-equipped room for a relaxing stay.</p>
+                <p>Price: Ksh 2500/night</p>
+                <label for="standard-quantity">Quantity:</label>
+                <input type="number" id="standard-quantity" value="0" min="0">
+                <button class="add-to-cart">Add to Cart</button>
+                <p class="availability">Availability: <span class="available">Available</span></p>
+            </div>
+            <div class="room-item" data-room-type="deluxe" data-price="3500">
+                <img src="room2.jpg" alt="Deluxe Suite">
+                <h3>Deluxe Suite</h3>
+                <p>Spacious suite with premium amenities and stunning views.</p>
+                <p>Price: Ksh 3500/night</p>
+                <label for="deluxe-quantity">Quantity:</label>
+                <input type="number" id="deluxe-quantity" value="0" min="0">
+                <button class="add-to-cart">Add to Cart</button>
+                <p class="availability">Availability: <span class="available">Available</span></p>
+            </div>
+            <div class="room-item" data-room-type="family" data-price="5000">
+                <img src="room3.jpg" alt="Family Suite">
+                <h3>Family Suite</h3>
+                <p>Perfect for families, with ample space and comfortable beds.</p>
+                <p>Price: Ksh 5000/night</p>
+                <label for="family-quantity">Quantity:</label>
+                <input type="number" id="family-quantity" value="0" min="0">
+                <button class="add-to-cart">Add to Cart</button>
+                <p class="availability">Availability: <span class="available">Available</span></p>
+            </div>
+        </div>
+        <div class="cart">
+            <h2>Your Cart</h2>
+            <ul id="cart-items">
+                </ul>
+            <p>Total: KSh <span id="cart-total">0</span></p>
+            <button id="checkout-button">Checkout</button>
+        </div>
+    </div>
+    <script src="booking.js"></script>
+</body>
+</html>

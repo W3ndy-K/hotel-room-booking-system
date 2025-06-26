@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Management - Hotel Azure Groove</title>
+    <link rel="stylesheet" href="rooms.css">
+</head>
+<body>
+    <div class="rooms-container">
+        <h1>Room Management</h1>
+
+        <div class="room-actions">
+            <button id="add-room-button">Add Room</button>
+        </div>
+
+        <table id="rooms-table">
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Room Type</th>
+                    <th>Availability</th>
+                    <th>Price (USD)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="rooms-list">
+                </tbody>
+        </table>
+
+        <div id="add-room-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Add New Room</h2>
+                <form id="add-room-form">
+                    <div class="form-group">
+                        <label for="roomNumber">Room Number</label>
+                        <input type="text" id="roomNumber" name="roomNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="roomType">Room Type</label>
+                        <select id="roomType" name="roomType" required>
+                            <option value="standard">Standard</option>
+                            <option value="deluxe">Deluxe</option>
+                            <option value="family">Family Suite</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="availability">Availability</label>
+                        <select id="availability" name="availability" required>
+                            <option value="available">Available</option>
+                            <option value="unavailable">Unavailable</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price (USD)</label>
+                        <input type="number" id="price" name="price" required>
+                    </div>
+                    <button type="submit">Add Room</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="edit-room-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Edit Room</h2>
+                <form id="edit-room-form">
+                    <input type="hidden" id="edit-room-id">
+                    <div class="form-group">
+                        <label for="editRoomNumber">Room Number</label>
+                        <input type="text" id="editRoomNumber" name="editRoomNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRoomType">Room Type</label>
+                        <select id="editRoomType" name="editRoomType" required>
+                            <option value="standard">Standard</option>
+                            <option value="deluxe">Deluxe</option>
+                            <option value="family">Family Suite</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAvailability">Availability</label>
+                        <select id="editAvailability" name="editAvailability" required>
+                            <option value="available">Available</option>
+                            <option value="unavailable">Unavailable</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPrice">Price (KSH)</label>
+                        <input type="number" id="editPrice" name="editPrice" required>
+                    </div>
+                    <button type="submit">Update Room</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="rooms.js"></script>
+</body>
+</html>

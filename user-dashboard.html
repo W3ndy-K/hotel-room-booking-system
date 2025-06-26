@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Hotel Azure Groove</title>
+    <link rel="stylesheet" href="user-dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <img src="logo.png" alt="Hotel Azure Groove Logo" class="logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" data-section="overview">Overview</a></li>
+                    <li><a href="#" data-section="bookings">My Bookings</a></li>
+                    <li><a href="#" data-section="profile">Profile</a></li>
+                    <li><a href="#" data-section="loyalty">Loyalty Program</a></li>
+                    <li><a href="#" data-section="support">Support</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <section id="overview" class="dashboard-section active-section">
+                <h2>Overview</h2>
+                <div class="overview-grid">
+                    <div class="overview-item">
+                        <h3>Upcoming Bookings</h3>
+                        <p id="upcoming-bookings-count">0</p>
+                    </div>
+                    <div class="overview-item">
+                        <h3>Loyalty Points</h3>
+                        <p id="loyalty-points">0</p>
+                    </div>
+                    <div class="overview-item">
+                        <h3>Account Status</h3>
+                        <p id="account-status">Active</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="bookings" class="dashboard-section">
+                <h2>My Bookings</h2>
+                <div id="bookings-list">
+                    </div>
+            </section>
+
+            <section id="profile" class="dashboard-section">
+                <h2>Profile</h2>
+                <div id="profile-details">
+                    </div>
+            </section>
+
+            <section id="loyalty" class="dashboard-section">
+                <h2>Loyalty Program</h2>
+                <div id="loyalty-details">
+                    </div>
+            </section>
+
+            <section id="support" class="dashboard-section">
+                <h2>Support</h2>
+                <p>Contact our support team for assistance.</p>
+                <a href="mailto:support@azuregroovehotel.com" class="support-link">Email Support</a>
+                <p>Or call us at: +1 (123) 456-7890</p>
+            </section>
+        </main>
+    </div>
+    <script src="user-dashboard.js"></script>
+</body>
+</html>
