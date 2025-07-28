@@ -7,48 +7,184 @@
     <link rel="stylesheet" href="booking.css">
 </head>
 <body>
+  <nav class="dashboard-nav">
+        <span class="logo">Hotel Azure Groove</span>
+        <ul>
+            <li><a href="booking.html" id="bookings-link">Bookings</a></li>
+            <li><a href="#" id="profile-link">Profile</a></li>
+            <li><a href="#" id="loyalty-link">Loyalty Points</a></li>
+            <li><a href="#" id="support-link">Support</a></li>
+            <li><a href="#" id="logout-btn">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="loyalty-section" class="dashboard-section" style="display:none;">
+            <h2>Loyalty Points</h2>
+            <div class="loyalty-card">
+                <span id="loyalty-points">0</span>
+                <p>Earn points with every booking and enjoy exclusive rewards!</p>
+                <div class="loyalty-tiers">
+                    <h3>Reward Tiers</h3>
+                    <ul>
+                        <li>100 pts: Complimentary breakfast</li>
+                        <li>250 pts: Room upgrade</li>
+                        <li>500 pts: Free night stay</li>
+                        <li>1000 pts: VIP experience package</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section id="support-section" class="dashboard-section" style="display:none;">
+            <h2>Support</h2>
+            <p>Our team is here to help you 24/7. Reach us at <a
+                    href="mailto:support@azuregroove.com">support@azuregroove.com</a> or call <strong>+254 700
+                    123456</strong>.</p>
+            <div class="support-faq">
+                <h3>Frequently Asked Questions</h3>
+                <ul>
+                    <li><strong>How do I change my booking?</strong> <br>Visit the Bookings page and select 'Modify'.
+                    </li>
+                    <li><strong>How do I redeem loyalty points?</strong> <br>Go to Loyalty Points and choose your
+                        reward.</li>
+                    <li><strong>How do I update my profile?</strong> <br>Click 'Profile' and select 'Edit Details'.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <section id="bookings-section" class="dashboard-section">
     <div class="booking-container">
         <h1>Book Your Stay</h1>
-        <div class="room-selection">
-            <div class="room-item" data-room-type="standard" data-price="2500">
-                <img src="room1.jpg" alt="Standard Room">
-                <h3>Standard Room</h3>
-                <p>Comfortable and well-equipped room for a relaxing stay.</p>
-                <p>Price: Ksh 2500/night</p>
-                <label for="standard-quantity">Quantity:</label>
-                <input type="number" id="standard-quantity" value="0" min="0">
-                <button class="add-to-cart">Add to Cart</button>
-                <p class="availability">Availability: <span class="available">Available</span></p>
-            </div>
-            <div class="room-item" data-room-type="deluxe" data-price="3500">
-                <img src="room2.jpg" alt="Deluxe Suite">
-                <h3>Deluxe Suite</h3>
-                <p>Spacious suite with premium amenities and stunning views.</p>
-                <p>Price: Ksh 3500/night</p>
-                <label for="deluxe-quantity">Quantity:</label>
-                <input type="number" id="deluxe-quantity" value="0" min="0">
-                <button class="add-to-cart">Add to Cart</button>
-                <p class="availability">Availability: <span class="available">Available</span></p>
-            </div>
-            <div class="room-item" data-room-type="family" data-price="5000">
-                <img src="room3.jpg" alt="Family Suite">
-                <h3>Family Suite</h3>
-                <p>Perfect for families, with ample space and comfortable beds.</p>
-                <p>Price: Ksh 5000/night</p>
-                <label for="family-quantity">Quantity:</label>
-                <input type="number" id="family-quantity" value="0" min="0">
-                <button class="add-to-cart">Add to Cart</button>
-                <p class="availability">Availability: <span class="available">Available</span></p>
-            </div>
+        <div class="room-selection" id="room-selection">
+            <!-- Room items will be dynamically inserted here -->
         </div>
         <div class="cart">
             <h2>Your Cart</h2>
-            <ul id="cart-items">
-                </ul>
+            <ul id="cart-items"></ul>
             <p>Total: KSh <span id="cart-total">0</span></p>
             <button id="checkout-button">Checkout</button>
         </div>
     </div>
+</section>
+    <section id="profile-section" class="dashboard-section" style="display:none;">
+        <h2>Profile</h2>
+        <div id="profile-details"></div>
+    </section>
+    <section id="loyalty-section" class="dashboard-section" style="display:none;">
+        <h2>Loyalty Points</h2>
+        <div class="loyalty-card">
+            <span id="loyalty-points">0</span>
+            <p>Earn points with every booking and enjoy exclusive rewards!</p>
+            <div class="loyalty-tiers">
+                <h3>Reward Tiers</h3>
+                <ul>
+                    <li>100 pts: Complimentary breakfast</li>
+                    <li>250 pts: Room upgrade</li>
+                    <li>500 pts: Free night stay</li>
+                    <li>1000 pts: VIP experience package</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="support-section" class="dashboard-section" style="display:none;">
+        <h2>Support</h2>
+        <p>Our team is here to help you 24/7. Reach us at <a href="mailto:support@azuregroove.com">support@azuregroove.com</a> or call <strong>+254 700 123456</strong>.</p>
+        <div class="support-faq">
+            <h3>Frequently Asked Questions</h3>
+            <ul>
+                <li><strong>How do I change my booking?</strong> <br>Visit the Bookings section and select 'Modify'.</li>
+                <li><strong>How do I redeem loyalty points?</strong> <br>Go to Loyalty Points and choose your reward.</li>
+                <li><strong>How do I update my profile?</strong> <br>Click 'Profile' and select 'Edit Details'.</li>
+            </ul>
+        </div>
+    </section>
+    <script>
+      const roomImages = {
+        'Standard': 'standard room.jpeg',
+        'Deluxe': 'deluxe suite room.jpeg',
+        'Family': 'family suite room.jpeg'
+      };
+
+      let cart = [];
+
+      fetch('hotel_backend_php/get_rooms.php')
+        .then(response => response.json())
+        .then(data => {
+          const roomSelection = document.getElementById('room-selection');
+          roomSelection.innerHTML = '';
+
+          data.forEach(room => {
+            const roomDiv = document.createElement('div');
+            roomDiv.className = 'room-item';
+            roomDiv.setAttribute('data-room-type', room.room_type.toLowerCase());
+            roomDiv.setAttribute('data-price', room.price);
+
+            const imgSrc = `/hotel-room-booking-system/${roomImages[room.room_type] || 'default.jpeg'}`;
+
+            roomDiv.innerHTML = `
+              <img src="${imgSrc}" alt="${room.room_type} Room">
+              <h3>${room.room_type} Room</h3>
+              <p>${getRoomDescription(room.room_type)}</p>
+              <p>Price: Ksh ${room.price}/night</p>
+              <label for="${room.room_type.toLowerCase()}-quantity">Quantity:</label>
+              <input type="number" id="${room.room_type.toLowerCase()}-quantity" value="0" min="0" max="${room.availability}">
+              <button class="add-to-cart">Add to Cart</button>
+              <p class="availability">Availability: <span class="${room.availability > 0 ? 'available' : 'unavailable'}">${room.availability > 0 ? room.availability : 'Unavailable'}</span></p>
+            `;
+            roomSelection.appendChild(roomDiv);
+
+            // Add to Cart functionality
+            const addToCartBtn = roomDiv.querySelector('.add-to-cart');
+            addToCartBtn.addEventListener('click', () => {
+              const quantityInput = roomDiv.querySelector('input[type="number"]');
+              const quantity = parseInt(quantityInput.value, 10);
+              if (quantity > 0 && quantity <= room.availability) {
+                const existing = cart.find(item => item.room_type === room.room_type);
+                if (existing) {
+                  existing.quantity += quantity;
+                } else {
+                  cart.push({
+                    room_type: room.room_type,
+                    price: room.price,
+                    quantity: quantity
+                  });
+                }
+                updateCartDisplay();
+                quantityInput.value = 0;
+              } else {
+                alert('Please enter a valid quantity.');
+              }
+            });
+          });
+        })
+        .catch(error => console.error('Error:', error));
+
+      function getRoomDescription(type) {
+        switch(type) {
+          case 'Standard':
+            return 'Comfortable and well-equipped room for a relaxing stay.';
+          case 'Deluxe':
+            return 'Spacious suite with premium amenities and stunning views.';
+          case 'Family':
+            return 'Perfect for families, with ample space and comfortable beds.';
+          default:
+            return '';
+        }
+      }
+
+      function updateCartDisplay() {
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        cartItems.innerHTML = '';
+        let total = 0;
+        cart.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = `${item.room_type} Room x ${item.quantity} = KSh ${item.price * item.quantity}`;
+          cartItems.appendChild(li);
+          total += item.price * item.quantity;
+        });
+        cartTotal.textContent = total;
+      }
+    </script>
     <script src="booking.js"></script>
 </body>
 </html>

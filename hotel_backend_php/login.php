@@ -1,31 +1,33 @@
 <?php
+header('Content-Type: application/json');
 include 'db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+$data = json_decode(file_get_contents('php://input'), true);
+$email = $data['email'] ?? '';
+$password = $data['password'] ?? '';
 
-    $stmt = $conn->prepare("SELECT id, password FROM users WHERE email = ?");
+$response = ['success' => false];
+
+if ($email && $password) {
+    $stmt = $conn->prepare("SELECT * FROM customers WHERE email = ? LIMIT 1");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $hashed_password);
-        $stmt->fetch();
-
-        if (password_verify($password, $hashed_password)) {
-            session_start();
-            $_SESSION['user_id'] = $id;
-            echo "success";
+    $result = $stmt->get_result();
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            $response['success'] = true;
+            // Optionally send user info except password
+            unset($user['password']);
+            $response['user'] = $user;
         } else {
-            echo "invalid";
+            $response['message'] = 'Incorrect password.';
         }
     } else {
-        echo "not_found";
+        $response['message'] = 'Email not found.';
     }
-
     $stmt->close();
-    $conn->close();
 }
+
+echo json_encode($response);
 ?>

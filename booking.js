@@ -1,5 +1,53 @@
-/* booking.js */
 document.addEventListener('DOMContentLoaded', function() {
+    // User authentication and section switching
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Fill profile details from user object
+    document.getElementById('profile-details').innerHTML = `
+        <table>
+            <tr><td><strong>Name:</strong></td><td>${user.first_name || user.name || ''} ${user.last_name || ''}</td></tr>
+            <tr><td><strong>Email:</strong></td><td>${user.email || ''}</td></tr>
+            <tr><td><strong>Phone:</strong></td><td>${user.phone || ''}</td></tr>
+        </table>
+    `;
+    document.getElementById('loyalty-points').textContent = user.loyalty_points || 0;
+
+    // Section switching
+    function showSection(section) {
+        document.getElementById('bookings-section').style.display = section === 'bookings' ? 'block' : 'none';
+        document.getElementById('profile-section').style.display = section === 'profile' ? 'block' : 'none';
+        document.getElementById('loyalty-section').style.display = section === 'loyalty' ? 'block' : 'none';
+        document.getElementById('support-section').style.display = section === 'support' ? 'block' : 'none';
+    }
+    showSection('bookings');
+
+    document.getElementById('bookings-link').onclick = function(e) {
+        e.preventDefault();
+        showSection('bookings');
+    };
+    document.getElementById('profile-link').onclick = function(e) {
+        e.preventDefault();
+        showSection('profile');
+    };
+    document.getElementById('loyalty-link').onclick = function(e) {
+        e.preventDefault();
+        showSection('loyalty');
+    };
+    document.getElementById('support-link').onclick = function(e) {
+        e.preventDefault();
+        showSection('support');
+    };
+    document.getElementById('logout-btn').onclick = function(e) {
+        e.preventDefault();
+        localStorage.removeItem('user');
+        window.location.href = 'hotel.html';
+    };
+
+    // Booking logic
     const roomItems = document.querySelectorAll('.room-item');
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
@@ -49,10 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    //example of changing availabilty.
-    setTimeout(()=>{
-        document.querySelectorAll('.room-item')[1].querySelector(".availability span").textContent = "Unavailable";
-        document.querySelectorAll('.room-item')[1].querySelector(".availability span").classList.remove('available');
-        document.querySelectorAll('.room-item')[1].querySelector(".availability span").classList.add('unavailable');
+    // Example of changing availability.
+    setTimeout(() => {
+        if (document.querySelectorAll('.room-item')[1]) {
+            document.querySelectorAll('.room-item')[1].querySelector(".availability span").textContent = "Unavailable";
+            document.querySelectorAll('.room-item')[1].querySelector(".availability span").classList.remove('available');
+            document.querySelectorAll('.room-item')[1].querySelector(".availability span").classList.add('unavailable');
+        }
     }, 5000);
 });

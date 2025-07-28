@@ -1,49 +1,30 @@
-/* auth.js */
-document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
-    const showSignup = document.getElementById('show-signup');
-    const showLogin = document.getElementById('show-login');
+// filepath: /opt/lampp/htdocs/hotel-room-booking-system/login.js
+document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const messageDiv = document.getElementById('login-message');
 
-    showSignup.addEventListener('click', function(e) {
-        e.preventDefault();
-        loginForm.style.display = 'none';
-        signupForm.style.display = 'block';
-    });
-
-    showLogin.addEventListener('click', function(e) {
-        e.preventDefault();
-        signupForm.style.display = 'none';
-        loginForm.style.display = 'block';
-    });
-
-    // Example Login Submission (replace with your actual backend logic)
-    document.getElementById('login-form-submit').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-        // Add your login logic here
-        console.log('Login:', email, password);
-        //Example of redirecting to a new page
-        //window.location.href = "/dashboard";
-    });
-
-    // Example Signup Submission (replace with your actual backend logic)
-    document.getElementById('signup-form-submit').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const name = document.getElementById('signup-name').value;
-        const email = document.getElementById('signup-email').value;
-        const password = document.getElementById('signup-password').value;
-        const confirmPassword = document.getElementById('signup-confirm-password').value;
-        // Add your signup logic here, including password validation
-        if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
+    fetch('hotel_backend_php/customer_login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            messageDiv.textContent = "Login successful! Redirecting...";
+            messageDiv.style.color = "green";
+            // Save user info to localStorage if needed
+            localStorage.setItem('user', JSON.stringify(data.user));
+            setTimeout(() => window.location.href = "user-dashboard.html", 1500);
+        } else {
+            messageDiv.textContent = data.message || "Login failed.";
+            messageDiv.style.color = "red";
         }
-
-        console.log('Signup:', name, email, password);
-        //example of redirecting to login.
-        signupForm.style.display = 'none';
-        loginForm.style.display = 'block';
+    })
+    .catch(() => {
+        messageDiv.textContent = "Server error. Please try again later.";
+        messageDiv.style.color = "red";
     });
 });

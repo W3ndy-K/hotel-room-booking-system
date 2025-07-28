@@ -1,52 +1,46 @@
-/* signup.js */
-document.addEventListener('DOMContentLoaded', function() {
-    const signupForm = document.getElementById('customer-signup');
+document.getElementById('customer-signup').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-    signupForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const messageDiv = document.getElementById('signup-message');
 
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
+    // Simple validation
+    if (password !== confirmPassword) {
+        messageDiv.textContent = "Passwords do not match.";
+        messageDiv.style.color = "red";
+        return;
+    }
 
-        // Basic password matching validation
-        if (password !== confirmPassword) {
-            alert('Passwords do not match.');
-            return;
+    // Send data to backend
+    fetch('hotel_backend_php/customer_signup.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            phone,
+            password
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            messageDiv.textContent = "Account created successfully! Redirecting to login...";
+            messageDiv.style.color = "green";
+            setTimeout(() => window.location.href = "login.html", 2000);
+        } else {
+            messageDiv.textContent = data.message || "Sign up failed.";
+            messageDiv.style.color = "red";
         }
-
-        // Add more robust client-side validation here (e.g., email format, password strength)
-        // Then, send the data to your backend for processing.
-
-        // Example: Sending data to a backend API (replace with your actual API endpoint)
-        fetch('/api/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phone: phone,
-                password: password,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Signup successful! Please login.');
-                window.location.href = '/login'; // Redirect to login page
-            } else {
-                alert('Signup failed: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred during signup.');
-        });
+    })
+    .catch(() => {
+        messageDiv.textContent = "Server error. Please try again later.";
+        messageDiv.style.color = "red";
     });
 });
