@@ -51,7 +51,7 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
     padding: 32px;
 }
-/* Add this to style the dashboard sections similar to user dashboard */
+
 
 .dashboard-section {
     max-width: 900px;

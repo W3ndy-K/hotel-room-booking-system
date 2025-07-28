@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // User authentication
     const user = JSON.parse(localStorage.getItem('user'));
+    // Redirect to login if user is not authenticated
     if (!user) {
         window.location.href = 'login.html';
         return;

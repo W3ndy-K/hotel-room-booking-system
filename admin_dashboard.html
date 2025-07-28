@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f4f6f9;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #1e293b;
+      color: white;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar h2 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #334155;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .card h3 {
+      margin-bottom: 1rem;
+      color: #1e293b;
+    }
+
+    .card button {
+      background-color: #1e40af;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .card button:hover {
+      background-color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#" class="active" onclick="loadSection('rooms')">Manage Rooms</a>
+    <a href="#" onclick="loadSection('bookings')">Manage Bookings</a>
+    <a href="#" onclick="loadSection('reports')">View Reports</a>
+    <a href="logout.php">Logout</a>
+  </aside>
+
+  <main class="main-content" id="mainContent">
+    <!-- Content loaded via JavaScript -->
+  </main>
+
+  <script>
+    function saveBooking(id) {
+  const row = document.querySelector(`tr[data-id='${id}']`);
+  const fields = row.querySelectorAll('.editable');
+  fields.forEach(cell => {
+    const field = cell.getAttribute('data-field');
+    const value = cell.innerText;
+
+    fetch('update_booking.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, field, value })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) alert('Booking update failed: ' + data.message);
+    });
+  });
+}
+
+function deleteBooking(id) {
+  if (!confirm('Delete this booking?')) return;
+  fetch(`delete_booking.php?id=${id}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.querySelector(`tr[data-id='${id}']`).remove();
+      } else {
+        alert('Delete failed');
+      }
+    });
+}
+
+    function saveRoom(id) {
+  const row = document.querySelector(`tr[data-id='${id}']`);
+  const fields = row.querySelectorAll('.editable');
+  fields.forEach(cell => {
+    const field = cell.getAttribute('data-field');
+    const value = cell.innerText;
+
+    fetch('update_room.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, field, value })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) alert('Update failed: ' + data.message);
+    });
+  });
+}
+
+function deleteRoom(id) {
+  if (!confirm('Delete this room?')) return;
+  fetch(`delete_room.php?id=${id}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.querySelector(`tr[data-id='${id}']`).remove();
+      } else {
+        alert('Delete failed');
+      }
+    });
+}
+
+    function loadSection(section) {
+  const main = document.getElementById('mainContent');
+  document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
+  event.target.classList.add('active');
+
+  switch (section) {
+    case 'rooms':
+      main.innerHTML = `
+        <div class="card">
+          <h3>Manage Rooms</h3>
+          <button onclick="window.location.href='hotel_backend_php/rooms_management.php'">Go to Room Management</button>
+        </div>
+      `;
+      break;
+
+    case 'bookings':
+      main.innerHTML = `
+        <div class="card">
+          <h3>Manage Bookings</h3>
+          <button onclick="window.location.href='hotel_backend_php/bookings_management.php'">Go to Booking Management</button>
+        </div>
+      `;
+      break;
+
+    case 'reports':
+      main.innerHTML = `
+        <div class="card">
+          <h3>Reports</h3>
+          <button onclick="window.location.href='hotel_backend_php/reports.php'">View Reports</button>
+        </div>
+      `;
+      break;
+
+    default:
+      main.innerHTML = `<p>Select an option from the sidebar.</p>`;
+  }
+}
+
+// Load default section
+loadSection('rooms');
+  </script>
+</body>
+</html>
